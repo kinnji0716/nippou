@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
             (String)this.getServletContext().getAttribute("pepper"));
 
             try{
-                e = em.createNamedQuery("checkLoginCodeAndPassword",Employee.class)
+                e = em.createNamedQuery("checkLoginCodeAndPassword", Employee.class)
                         .setParameter("code", code)
                         .setParameter("pass", password)
                         .getSingleResult();
@@ -80,8 +80,8 @@ public class LoginServlet extends HttpServlet {
 
         if(!check_result) {
 
-            request.setAttribute("_token",request.getSession().getId());
-            request.setAttribute("hasError",true);
+            request.setAttribute("_token", request.getSession().getId());
+            request.setAttribute("hasError", true);
             request.setAttribute("code", code);
 
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login/login.jsp");
