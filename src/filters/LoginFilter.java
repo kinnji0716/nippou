@@ -1,5 +1,6 @@
 package filters;
 
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -46,28 +47,29 @@ public class LoginFilter implements Filter {
 
             Employee e = (Employee)session.getAttribute("login_employee");
 
-            if(!servlet_path.equals("login")) {
+            if(!servlet_path.equals("/login")) {
 
-            if(e == null) {
-                ((HttpServletResponse)response).sendRedirect(context_path + "/login");
-                return;
-            }
+                if(e == null) {
+                    ((HttpServletResponse)response).sendRedirect(context_path + "/login");
+                    return;
+                }
 
-            if(servlet_path.matches("/employees.*") && e.getAdmin_flag() == 0) {
-                ((HttpServletResponse)response).sendRedirect(context_path + "/");
-                return;
-            }
-        } else {
+                if(servlet_path.matches("/employees.*") && e.getAdmin_flag() == 0) {
+                    ((HttpServletResponse)response).sendRedirect(context_path + "/");
+                    return;
+                }
+            } else {
 
-            if( e != null) {
-                ((HttpServletResponse)response).sendRedirect(context_path + "/");
-                return;
+                if(e != null) {
+                    ((HttpServletResponse)response).sendRedirect(context_path + "/");
+                    return;
+                }
             }
         }
+
+        chain.doFilter(request, response);
     }
 
-    chain.doFilter(request, response);
-}
     /**
      * @see Filter#init(FilterConfig)
      */
